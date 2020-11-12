@@ -23,6 +23,12 @@ struct LaunchAgentController {
         }
     }
 
+    func killOtherVersions(others: [NSRunningApplication]) {
+        for other in others {
+            other.forceTerminate()
+        }
+    }
+
     private func setEnabled(_ enabled: Bool) -> Bool {
         SMLoginItemSetEnabled("com.maxgoedjen.Secretive.SecretAgent" as CFString, enabled)
     }

@@ -37,6 +37,9 @@ struct Secretive: App {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willBecomeActiveNotification)) { _ in
                     agentStatusChecker.check()
+                    if !agentStatusChecker.otherVersionsRunning.isEmpty {
+                        LaunchAgentController().killOtherVersions(others: agentStatusChecker.otherVersionsRunning)
+                    }
                     if hasRunSetup && !agentStatusChecker.running {
                         // We've run setup, we didn't just update, launchd is just not doing it's thing.
                         // Force a launch directly.

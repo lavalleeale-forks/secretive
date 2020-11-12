@@ -9,6 +9,7 @@ protocol AgentStatusCheckerProtocol: ObservableObject {
 class AgentStatusChecker: ObservableObject, AgentStatusCheckerProtocol {
 
     @Published var running: Bool = false
+    @Published var otherVersionsRunning: [NSRunningApplication] = []
 
     init() {
         check()
@@ -16,6 +17,7 @@ class AgentStatusChecker: ObservableObject, AgentStatusCheckerProtocol {
 
     func check() {
         running = instanceSecretAgentProcess != nil
+        otherVersionsRunning = otherVerisonsAgentProcesses
     }
 
     // All processes, including ones from older versions, etc
@@ -33,6 +35,12 @@ class AgentStatusChecker: ObservableObject, AgentStatusCheckerProtocol {
             }
         }
         return nil
+    }
+
+    var otherVerisonsAgentProcesses: [NSRunningApplication] {
+        let all = secretAgentProcesses
+        let ours = instanceSecretAgentProcess
+        return all.filter { $0 != ours }
     }
 
 }

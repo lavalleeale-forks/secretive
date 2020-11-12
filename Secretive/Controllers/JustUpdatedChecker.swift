@@ -23,8 +23,6 @@ class JustUpdatedChecker: ObservableObject, JustUpdatedCheckerProtocol {
         }
     }
 
-
-
 }
 
 extension JustUpdatedChecker {
